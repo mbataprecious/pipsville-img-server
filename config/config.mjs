@@ -10,6 +10,7 @@ const config = {
     domain : process.env.DOMAIN,
     email: process.env.EMAIL,
     host: process.env.HOST,
+    credential:process.env.FIREBASE_CERT
   };
   
   export default config;

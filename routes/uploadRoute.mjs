@@ -1,16 +1,19 @@
 import { default as express } from "express";
 import { v4 as uuidv4 } from 'uuid'
 import response from '../utils/reponses.mjs';
-import proctAdmin from '../utils/firebase.mjs';
+import pipsvilleAdmin from '../utils/firebase.mjs';
 import User from '../model/user.mjs';
 import formidable from "../middlewares/formidable.mjs"
+import { getStorage } from 'firebase-admin/storage'
 // import formidable from 'formidable';
 
 
 export const router = express.Router();
 
-//Storage Reference
-const bucket = proctAdmin().storage().bucket(`gs://pipsvile.appspot.com`);
+
+
+//get storage
+const bucket = getStorage( await pipsvilleAdmin()).bucket();
 
  const uploadFile = async (file, filename) =>
   bucket.upload(file, {
@@ -26,7 +29,7 @@ const bucket = proctAdmin().storage().bucket(`gs://pipsvile.appspot.com`);
     const { userId } = req.params;
     //get picture from files
     const file = req.files.photo;
-
+console.log(file)
     const uploadFileFirebase = await uploadFile(file.filepath, file.newFilename);
 
     if (!uploadFileFirebase) {
