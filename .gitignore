@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Firebase json key
-*config/firebase_key.json
+config/firebase_key.json
