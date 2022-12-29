@@ -19,17 +19,7 @@ import { router as uploadRouter } from './routes/uploadRoute.mjs';
 //import { sendMail } from "./mailsend.mjs";
 
 
-// Connection URL
-mongoose.Promise = global.Promise;
-mongoose.connect(config.mongoUri, { 
-  useNewUrlParser: true,
-   useCreateIndex: true,
-    useUnifiedTopology: true,
-     useFindAndModify: false,
-     autoIndex: true }).catch(err=>console.log(err))
-mongoose.connection.on('error', () => {
-  console.log(`unable to connect to database: ${config.mongoUri}`);
-});
+
 
 var app = express();
 
@@ -55,8 +45,20 @@ app.set('trust proxy', true);
 
 export const server = http.createServer(app);
 
+// Connection URL
+mongoose.Promise = global.Promise;
+mongoose.connect(config.mongoUri, { 
+  useNewUrlParser: true,
+   useCreateIndex: true,
+    useUnifiedTopology: true,
+     useFindAndModify: false,
+     autoIndex: true }).then(()=>{
+      server.listen(port);
+     }).catch(err=>console.log(err))
+mongoose.connection.on('error', () => {
+  console.log(`unable to connect to database: ${config.mongoUri}`);
+});
 
 
-server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
