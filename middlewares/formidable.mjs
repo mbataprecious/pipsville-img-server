@@ -1,6 +1,8 @@
 import formidable from 'formidable';
 
-const form = formidable({ keepExtensions: true, maxFileSize: 3 * 1024 * 1024 }); // multiples means req.files will be an array
+const form = formidable({ keepExtensions: true,
+                        // maxFileSize: 3 * 1024 * 1024 
+                        }); // multiples means req.files will be an array
 
 export default async function parseMultipartForm(req, res, next) {
   const contentType = req.headers['content-type'];
